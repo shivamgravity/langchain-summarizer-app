@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Summarizer</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <div class="card">
+            <header>
+                <h1>✨ AI Summarizer</h1>
+                <p>Paste your long text below to get a concise summary.</p>
+            </header>
+
+            <div class="input-section">
+                <textarea id="inputText" placeholder="Paste your article or paragraph here..."></textarea>
+            </div>
+
+            <div class="actions">
+                <button id="summarizeBtn" onclick="summarizeText()">
+                    <span id="btnText">Summarize Text</span>
+                    <div id="loader" class="spinner hidden"></div>
+                </button>
+            </div>
+
+            <div id="resultSection" class="result-section hidden">
+                <h3>Summary</h3>
+                <p id="summaryOutput"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function summarizeText() {
+            const input = document.getElementById("inputText").value;
+            const btn = document.getElementById("summarizeBtn");
+            const btnText = document.getElementById("btnText");
+            const loader = document.getElementById("loader");
+            const resultSection = document.getElementById("resultSection");
+            const output = document.getElementById("summaryOutput");
+
+            if (!input.trim()) return alert("Please enter some text!");
+
+            // UI Loading State
+            btn.disabled = true;
+            btnText.style.display = "none";
+            loader.classList.remove("hidden");
+            resultSection.classList.add("hidden");
+
+            try {
+                const response = await fetch('/summarize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: input })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    output.textContent = data.summary;
+                    resultSection.classList.remove("hidden");
+                } else {
+                    alert("Error: " + data.detail);
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Failed to connect to the server.");
+            } finally {
+                // Reset UI
+                btn.disabled = false;
+                btnText.style.display = "block";
+                loader.classList.add("hidden");
+            }
+        }
+    </script>
+</body>
+</html>
