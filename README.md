@@ -21,8 +21,8 @@ The goal of this project is to create a lightweight, high-performance API that l
 
 1.  **Clone the Repository**
     ```bash
-    git clone <your-repo-url>
-    cd blackcoffer-task-9-langchain
+    git clone https://github.com/shivamgravity/langchain-summarizer-app
+    cd langchain-summarizer-app
     ```
 
 2.  **Set Up Virtual Environment**
@@ -41,7 +41,6 @@ The goal of this project is to create a lightweight, high-performance API that l
     ```bash
     pip install -r requirements.txt
     ```
-    *(Note: Create a requirements.txt file with: fastapi, uvicorn, langchain-groq, langchain-core, python-dotenv)*
 
 4.  **Configure Environment Variables**
     Create a `.env` file in the root directory and add your API key:
@@ -56,22 +55,11 @@ The goal of this project is to create a lightweight, high-performance API that l
     ```bash
     python app.py
     ```
-    *The server will start at `http://0.0.0.0:8000`*
+    *The server will start at `http://localhost:8000`*
 
-2.  **Access Swagger UI:**
-    Open your web browser and go to `http://localhost:8000/docs`.
+2. **Go to >** `http://localhost:8000`and paste the text content in the box.
 
-3.  **Test the API:**
-    * Click on the `POST /summarize` endpoint.
-    * Click **"Try it out"**.
-    * Enter your text in the JSON body:
-      ```json
-      {
-        "text": "Paste your long text here..."
-      }
-      ```
-    * Click **"Execute"**.
-    * View the summarized response below.
+3. Click **Summmarize** to see the summary under 100 words.
 
 ## Solution Architecture
 
@@ -88,3 +76,5 @@ This project wraps an LLM chain in a REST API:
 | Method | Endpoint | Description | Request Body | Response |
 | :--- | :--- | :--- | :--- | :--- |
 | `POST` | `/summarize` | Summarizes input text | `{"text": "string"}` | `{"summary": "string"}` |
+
+You can go to `http://localhost:8000/docs` to see the details of the API endpoints.
