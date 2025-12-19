@@ -15,11 +15,11 @@ app = FastAPI(
     description="A full-stack AI application using FastAPI, LangChain, and Groq."
 )
 
-# 1. Mount the 'static' folder
+# Mount the 'static' folder
 # This allows the HTML file to load the CSS file.
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# 2. Serve the Frontend at the Root URL
+# Serve the Frontend at the Root URL
 @app.get("/")
 def read_root():
     return FileResponse("static/index.html")
@@ -39,14 +39,14 @@ summary_prompt = ChatPromptTemplate.from_messages([
 # Create the LangChain Pipeline
 chain = summary_prompt | llm
 
-# --- Data Models ---
+# Data Models
 class SummaryRequest(BaseModel):
     text: str
 
 class SummaryResponse(BaseModel):
     summary: str
 
-# --- API Endpoints ---
+# API Endpoints
 
 @app.post("/summarize", response_model=SummaryResponse)
 async def summarize_text(request: SummaryRequest):
